@@ -1,0 +1,2 @@
+# Introduction
+This demo project features a REST API for product information retrieval from an H2 database. It's built with hexagonal architecture and follows an API-First approach for clean design and easy testing.
