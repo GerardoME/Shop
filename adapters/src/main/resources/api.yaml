@@ -1,15 +1,15 @@
 openapi: 3.0.0
 info:
-  title: Price Rate API
+  title: Price product API
   version: 1.0.0
   description: API to query product price rates based on date, product ID, and brand ID.
 
 servers:
-  - url: https://api.example.com/v1
+  - url: http://localhost:8080
     description: Production server
 
 paths:
-  /rates:
+  /products:
     get:
       summary: Get applicable price rate
       operationId: getApplicableRate
