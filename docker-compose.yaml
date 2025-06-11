@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  h2-database:
+    image: ghcr.io/oscarfonts/h2:latest
+    container_name: h2-db
+    ports:
+      - "8082:8082" # web console port
+      - "9092:9092" # server port
+    volumes:
+      - h2_data:/opt/h2-data
+    environment:
+      #- H2_URL=jdbc:h2:tcp://localhost:9092/./mydb # file storage
+      - H2_URL=jdbc:h2:mem:testdb # in memory
+      - H2_USER=sa
+      - H2_PASSWORD=
+    restart: always
+
+  spring-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Shop
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:tcp://h2-database:9092/shop
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+    depends_on:
+      - h2-database
+    restart: always
+
+volumes:
+  h2_data:

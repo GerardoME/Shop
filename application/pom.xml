@@ -11,19 +11,16 @@
     <name>application</name>
     <description>application</description>
 
-    <properties>
-        <java.version>17</java.version>
-    </properties>
     <dependencies>
-        <!-- Modules dependency -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>domain</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot</artifactId>
         </dependency>
 
         <dependency>
@@ -42,10 +39,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -39,17 +39,17 @@ paths:
             format: int64
             example: 1
       responses:
-        '200':
+        "200":
           description: Price rate successfully retrieved.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AppliedRate'
-        '400':
+                $ref: "#/components/schemas/AppliedRate"
+        "400":
           description: Invalid input parameters.
-        '404':
+        "404":
           description: Rate not found for the provided parameters.
-        '500':
+        "500":
           description: Internal server error.
 
 components:
