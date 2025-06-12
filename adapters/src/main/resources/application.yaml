@@ -2,12 +2,17 @@ spring:
   application:
     name: adapters
   datasource:
-    url: jdbc:h2:mem:mydb
-    username: h2
-    password: password
+    url: jdbc:h2:file:./shop
+    username: sa
+    password:
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
   h2:
     console:
       enabled: true
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql

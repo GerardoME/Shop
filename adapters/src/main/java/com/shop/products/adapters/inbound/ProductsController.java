@@ -1,11 +1,11 @@
 package com.shop.products.adapters.inbound;
 
+import com.shop.products.adapters.exceptions.ProductNotFoundException;
 import com.shop.products.adapters.inbound.model.AppliedRate;
-import com.shop.products.adapters.mapper.ApiResponseMapper;
+import com.shop.products.adapters.inbound.mapper.ApiResponseMapper;
 import com.shop.products.application.ports.inbound.FindProductRateUseCase;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.Optional;
 
 import com.shop.products.domain.model.ProductRate;
@@ -33,7 +33,7 @@ public class ProductsController implements ProductsApiDelegate {
         }
         Optional<ProductRate> productRate = findProductRateUseCase.findProductRate(applicationDate, productId, brandId);
         if(productRate.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ProductNotFoundException("Product not found");
         }
         AppliedRate product = apiResponseMapper.toAppliedRate(productRate.get());
 

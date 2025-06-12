@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 import com.shop.products.adapters.exceptions.ProductNotFoundException;
 import com.shop.products.adapters.inbound.model.AppliedRate;
 //import com.shop.products.adapters.mapper.ApiResponseMapper;
-import com.shop.products.adapters.mapper.ApiResponseMapper;
+import com.shop.products.adapters.inbound.mapper.ApiResponseMapper;
 import com.shop.products.application.ports.inbound.FindProductRateUseCase;
 
 import java.time.LocalDate;

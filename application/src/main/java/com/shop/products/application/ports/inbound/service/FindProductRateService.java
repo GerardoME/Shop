@@ -8,8 +8,10 @@ import java.util.Optional;
 
 import com.shop.products.domain.model.ProductRate;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
+@Service
 public class FindProductRateService implements FindProductRateUseCase {
 
     private final ProductRepository productRepository;

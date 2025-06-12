@@ -1,0 +1,54 @@
+package com.shop.products.adapters.outbound.persistence;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+import java.time.LocalDateTime; // Use LocalDateTime for combined date and time
+import java.math.BigDecimal; // Use BigDecimal for monetary values
+
+@Entity
+@Table(name = "price_rates")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PriceRateEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private BrandEntity brand;
+
+    @Column(name = "start_date", nullable = false)
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date", nullable = false)
+    private LocalDateTime endDate;
+
+    @Column(name = "price_list", nullable = false)
+    private String priceList;
+
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
+
+    @Column(name = "priority", nullable = false)
+    private Integer priority;
+
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
+
+    @Column(name = "curr", nullable = false, length = 3)
+    private String curr;
+}
