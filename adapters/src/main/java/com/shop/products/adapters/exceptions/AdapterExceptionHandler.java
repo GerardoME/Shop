@@ -30,6 +30,7 @@ public class AdapterExceptionHandler {
         MissingServletRequestParameterException.class
     })
     public ResponseEntity handleBadRequestExceptions(Exception ex) {
+        log.error(ERROR_INVALID_PARAMETERS, ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Map.of("data", ERROR_INVALID_PARAMETERS));
