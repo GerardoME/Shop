@@ -1,6 +1,7 @@
 package com.shop.products.adapters.outbound.persistence.repository;
 
 import com.shop.products.adapters.outbound.persistence.BrandEntity;
+import com.shop.products.adapters.outbound.persistence.PriceListEntity;
 import com.shop.products.adapters.outbound.persistence.PriceRateEntity;
 import com.shop.products.adapters.outbound.persistence.PriceRateRepository;
 import com.shop.products.adapters.outbound.persistence.mapper.PriceRateMapper;
@@ -30,10 +31,10 @@ class H2RepositoryTest {
     void setUp() {
         priceRateEntity = new PriceRateEntity();
         priceRateEntity.setId(1L);
-        priceRateEntity.setBrand(new BrandEntity(1L, BrandEntity.BrandEnum.ZARA.getName()));
+        priceRateEntity.setBrand(new BrandEntity(1, "ZARA"));
         priceRateEntity.setProductId(1234L);
         priceRateEntity.setPrice(BigDecimal.valueOf(35.05));
-        priceRateEntity.setPriceList("1");
+        priceRateEntity.setPriceList(new PriceListEntity(1,"SUMMER_SALE"));
         priceRateEntity.setCurr("EUR");
         priceRateEntity.setEndDate(LocalDateTime.now().plusMonths(1));
         priceRateEntity.setStartDate(LocalDateTime.now().minusWeeks(1));
@@ -45,11 +46,11 @@ class H2RepositoryTest {
         ProductRate mockedProduct = mock(ProductRate.class);
         when(mockedProduct.getPrice()).thenReturn(BigDecimal.valueOf(35.05));
         when(priceRateMapper.toProductRate(priceRateEntity)).thenReturn(mockedProduct);
-        when(priceRateRepository.findByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(1234L, 1L, LocalDate.now()
+        when(priceRateRepository.findByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(1234, 1, LocalDate.now()
                 .atStartOfDay(), LocalDate.now()
                 .atStartOfDay())).thenReturn(priceRateEntity);
 
-        Optional<ProductRate> productRate = h2Repository.findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(1234L, 1L, LocalDate.now());
+        Optional<ProductRate> productRate = h2Repository.findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(1234, 1, LocalDate.now());
 
         assertTrue(productRate.isPresent());
         assertEquals(productRate.get().getPrice(), BigDecimal.valueOf(35.05));

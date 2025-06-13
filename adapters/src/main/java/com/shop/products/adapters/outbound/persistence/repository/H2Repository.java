@@ -18,8 +18,8 @@ public class H2Repository implements ProductRepository {
     private final PriceRateRepository priceRateRepository;
     private final PriceRateMapper priceRateMapper;
     @Override
-    public Optional<ProductRate> findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(Long productId,
-                                                                                                   Long brandId,
+    public Optional<ProductRate> findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(Integer productId,
+                                                                                                   Integer brandId,
                                                                                                    LocalDate applicationDate) {
         PriceRateEntity priceRateEntity =
                 priceRateRepository.findByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(productId, brandId, applicationDate.atStartOfDay(), applicationDate.atStartOfDay());

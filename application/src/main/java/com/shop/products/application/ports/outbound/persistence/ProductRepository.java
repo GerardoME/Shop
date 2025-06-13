@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface ProductRepository {
     Optional<ProductRate> findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(
-            Long productId, Long brandId, LocalDate applicationDate);
+            Integer productId, Integer brandId, LocalDate applicationDate);
 }

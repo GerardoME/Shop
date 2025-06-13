@@ -17,7 +17,7 @@ public class FindProductRateService implements FindProductRateUseCase {
     private final ProductRepository productRepository;
 
     @Override
-    public Optional<ProductRate> findProductRate(LocalDate applicationDate, Long productId, Long brandId) {
+    public Optional<ProductRate> findProductRate(LocalDate applicationDate, Integer productId, Integer brandId) {
 
         return productRepository.findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(
                         productId, brandId, applicationDate);

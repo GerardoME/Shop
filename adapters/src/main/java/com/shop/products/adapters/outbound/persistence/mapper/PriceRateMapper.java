@@ -9,5 +9,6 @@ import org.mapstruct.Mapping;
 public interface PriceRateMapper {
 
     @Mapping(target = "brand", source = "brand.name")
+    @Mapping(target = "priceList", source = "priceList.name")
     ProductRate toProductRate(PriceRateEntity priceRateEntity);
 }

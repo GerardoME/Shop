@@ -41,7 +41,7 @@ class FindProductRateRateUseCaseTest {
     void findProductRate_withValidParams_ReturnsProductRate() {
         when(productRepository.findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(any(), any(), any()))
                 .thenReturn(Optional.of(productRate));
-        Optional<ProductRate> productRate = findProductRateService.findProductRate(LocalDate.now(), 12345L, 1L);
+        Optional<ProductRate> productRate = findProductRateService.findProductRate(LocalDate.now(), 12345, 1);
         assertNotNull(productRate);
     }
 }

@@ -9,5 +9,5 @@ import java.time.LocalDateTime;
 public interface PriceRateRepository extends JpaRepository<PriceRateEntity, Long> {
 
     PriceRateEntity findByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-        Long productId, Long brandId, LocalDateTime applicationDateStart, LocalDateTime applicationDateEnd);
+        Integer productId, Integer brandId, LocalDateTime applicationDateStart, LocalDateTime applicationDateEnd);
 }

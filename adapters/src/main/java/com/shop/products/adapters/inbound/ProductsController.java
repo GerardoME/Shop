@@ -24,7 +24,7 @@ public class ProductsController implements ProductsApiDelegate {
     private final ApiResponseMapper apiResponseMapper;
 
     @Override
-    public ResponseEntity<AppliedRate> getApplicableRate(LocalDate applicationDate, Long productId, Long brandId) {
+    public ResponseEntity<AppliedRate> getApplicableRate(LocalDate applicationDate, Integer productId, Integer brandId) {
 
         log.info("Request received with date {}, product id {}, brand id {}", applicationDate, productId, brandId);
 

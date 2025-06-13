@@ -37,8 +37,9 @@ public class PriceRateEntity {
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
-    @Column(name = "price_list", nullable = false)
-    private String priceList;
+    @ManyToOne
+    @JoinColumn(name = "price_list", nullable = false)
+    private PriceListEntity priceList;
 
     @Column(name = "product_id", nullable = false)
     private Long productId;
