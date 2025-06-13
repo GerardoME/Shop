@@ -81,10 +81,8 @@ mvn verify -Pintegration-tests
 After compilation, you can run the Spring Boot application directly:
 
 ```bash
-java -jar target/<your-artifact-id>-<version>.jar
+java -jar bootstrap/target/bootstrap-0.0.1-SNAPSHOT.jar
 ```
-
-Replace `<your-artifact-id>` and `<version>` with your project's actual artifact ID and version (e.g., `java -jar target/my-spring-app-0.0.1-SNAPSHOT.jar`).
 
 #### 5. Build and Run with Docker
 
