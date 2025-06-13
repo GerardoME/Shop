@@ -18,7 +18,9 @@ public class FindProductRateService implements FindProductRateUseCase {
 
     @Override
     public Optional<ProductRate> findProductRate(LocalDate applicationDate, Integer productId, Integer brandId) {
-
+        if(applicationDate == null || productId == null || brandId == null) {
+            throw new IllegalArgumentException("applicationDate and productId and brandId must not be null");
+        }
         return productRepository.findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(
                         productId, brandId, applicationDate);
     }

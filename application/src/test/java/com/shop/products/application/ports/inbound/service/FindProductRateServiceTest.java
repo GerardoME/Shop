@@ -1,6 +1,7 @@
 package com.shop.products.application.ports.inbound.service;
 
 import com.shop.products.application.ports.outbound.persistence.ProductRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -22,4 +23,10 @@ class FindProductRateServiceTest {
                 .findByProductIdAndBrandIdAndApplicationDateBetweenStartAndEndDate(any(), any(), any());
     }
 
+
+    @Test
+    void findProductRate_InvalidParameters_ThrowsException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                service.findProductRate(null, 1234, 1));
+    }
 }
