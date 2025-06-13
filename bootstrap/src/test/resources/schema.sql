@@ -1,0 +1,32 @@
+
+SET REFERENTIAL_INTEGRITY FALSE;
+
+DROP TABLE IF EXISTS PRICE_RATES;
+DROP TABLE IF EXISTS BRANDS;
+DROP TABLE IF EXISTS RATES;
+
+SET REFERENTIAL_INTEGRITY TRUE;
+
+CREATE TABLE IF NOT EXISTS BRANDS (
+                                      BRAND_ID BIGINT PRIMARY KEY,
+                                      NAME VARCHAR(255) NOT NULL UNIQUE
+    );
+CREATE TABLE IF NOT EXISTS RATES (
+                                      RATE_ID INTEGER PRIMARY KEY,
+                                      NAME VARCHAR(255) NOT NULL UNIQUE
+    );
+CREATE TABLE IF NOT EXISTS PRICE_RATES (
+                                           ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                           BRAND_ID BIGINT NOT NULL,
+                                           START_DATE TIMESTAMP NOT NULL,
+                                           END_DATE TIMESTAMP NOT NULL,
+                                           PRICE_LIST INTEGER NOT NULL,
+    PRODUCT_ID BIGINT NOT NULL,
+    PRIORITY INT NOT NULL,
+    PRICE DECIMAL(10, 2) NOT NULL,
+    CURR VARCHAR(3) NOT NULL,
+    FOREIGN KEY (BRAND_ID) REFERENCES BRANDS(BRAND_ID),
+    FOREIGN KEY (PRICE_LIST) REFERENCES RATES(RATE_ID)
+    );
+
+CREATE INDEX IF NOT EXISTS idx_price_rates_product_brand_date ON PRICE_RATES (PRODUCT_ID, BRAND_ID, START_DATE, END_DATE);

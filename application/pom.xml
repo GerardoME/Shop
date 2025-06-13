@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.shop</groupId>
-        <artifactId>product-rates</artifactId>
+        <artifactId>price-rate-api</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>application</artifactId>
@@ -35,10 +35,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
