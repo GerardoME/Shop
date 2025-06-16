@@ -100,6 +100,10 @@ docker run -p 8080:8080 price-rate-api
 
 This will map port 8080 of your host machine to port 8080 inside the Docker container.
 
+In development environment to enable H2 console run the Docker container with dev profile
+```bash
+docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE=dev price-rate-api 
+```
 ---
 
 ## Principal URLs
@@ -115,7 +119,7 @@ Once the application is running, you can access the following URLs:
     ```
     http://localhost:8080/h2-console
     ```
-    * **JDBC URL**: `jdbc:h2:mem:testdb` (or whatever you've configured in `application.properties`)
+    * **JDBC URL**: `jdbc:h2:file:./shop` 
     * **Username**: `sa` (default)
     * **Password**: (leave blank, default)
       This console allows you to inspect the H2 database content and execute SQL queries.
