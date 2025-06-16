@@ -1,22 +1,9 @@
 package com.shop.products.adapters.inbound;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.shop.products.adapters.exceptions.ProductNotFoundException;
-import com.shop.products.adapters.inbound.model.AppliedRate;
-//import com.shop.products.adapters.mapper.ApiResponseMapper;
 import com.shop.products.adapters.inbound.mapper.ApiResponseMapper;
+import com.shop.products.adapters.inbound.model.AppliedRate;
 import com.shop.products.application.ports.inbound.FindProductRateUseCase;
-
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.Optional;
-
 import com.shop.products.domain.model.ProductRate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,13 +11,24 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 class ProductsControllerTest {
 
     private FindProductRateUseCase findProductRateService = mock(FindProductRateUseCase.class);
     private ApiResponseMapper apiResponseMapper = mock(ApiResponseMapper.class);
     private ProductsController productsController = new ProductsController(findProductRateService, apiResponseMapper);
 
-    private LocalDate testDate;
+    private OffsetDateTime applicationDate;
     private Integer testProductId;
     private Integer testBrandId;
     private String testBrand;
@@ -38,7 +36,7 @@ class ProductsControllerTest {
 
     @BeforeEach
     void setUp() {
-        testDate = LocalDate.of(2025, 6, 10);
+        applicationDate = OffsetDateTime.of(2025, 6, 12, 10, 0, 0, 0, ZoneOffset.UTC);
         testProductId = 35455;
         testBrand = "ZARA";
 
@@ -55,11 +53,11 @@ class ProductsControllerTest {
     void getAppliedRate_shouldReturn200Ok_whenProductFound() {
 
         when(apiResponseMapper.toAppliedRate(any())).thenReturn(appliedRate);
-        when(findProductRateService.findProductRate(any(LocalDate.class), any(), any()))
+        when(findProductRateService.findProductRate(any(LocalDateTime.class), any(), any()))
                 .thenReturn(Optional.of(mock(ProductRate.class)));
 
         ResponseEntity<AppliedRate> response =
-                productsController.getApplicableRate(testDate, testProductId, testBrandId);
+                productsController.getApplicableRate(applicationDate, testProductId, testBrandId);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -69,16 +67,16 @@ class ProductsControllerTest {
 
     @Test
     void getAppliedRate_shouldReturn404NotFound_whenProductNotFoundByServiceReturningNull() {
-        when(findProductRateService.findProductRate(any(LocalDate.class), any(), any()))
+        when(findProductRateService.findProductRate(any(LocalDateTime.class), any(), any()))
                 .thenReturn(Optional.empty());
         Assertions.assertThrows(ProductNotFoundException.class, () -> {
-                    productsController.getApplicableRate(testDate, testProductId, testBrandId);
+                    productsController.getApplicableRate(applicationDate, testProductId, testBrandId);
                 });
     }
 
     @Test
     void getAppliedRate_shouldReturn400BadRequest_whenInvalidApplicationDate() {
-        LocalDate invalidDate = LocalDate.of(1999, 1, 1); // Antes del 2000
+        OffsetDateTime invalidDate = OffsetDateTime.of(1999, 6, 12, 10, 0, 0, 0, ZoneOffset.UTC);
 
         ResponseEntity<AppliedRate> response =
                 productsController.getApplicableRate(invalidDate, testProductId, testBrandId);
@@ -90,10 +88,10 @@ class ProductsControllerTest {
 
     @Test()
     void getAppliedRate_shouldReturn500InternalServerError_whenServiceThrowsUnexpectedException() {
-        when(findProductRateService.findProductRate(any(LocalDate.class), any(), any()))
+        when(findProductRateService.findProductRate(any(LocalDateTime.class), any(), any()))
                 .thenThrow(new RuntimeException("Unexpected database error"));
         Assertions.assertThrows(RuntimeException.class, () -> {
-            productsController.getApplicableRate(testDate, testProductId, testBrandId);
+            productsController.getApplicableRate(applicationDate, testProductId, testBrandId);
         });
     }
 }

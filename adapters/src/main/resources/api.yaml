@@ -16,12 +16,12 @@ paths:
       parameters:
         - name: applicationDate
           in: query
-          description: Date on which the rate is to be applied (YYYY-MM-DD format).
+          description: Date on which the rate is to be applied (YYYY-MM-DDTHH:MM:SSZ format).
           required: true
           schema:
             type: string
-            format: date
-            example: "2025-06-10"
+            format: date-time
+            example: "2018-03-20T09:12:28Z"
         - name: productId
           in: query
           description: Unique identifier of the product.

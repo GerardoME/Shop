@@ -19,3 +19,9 @@ The **`adapters` module** acts as the **outermost layer** in the hexagonal archi
 ## Dependencies
 
 This module depends on the **`domain` module** and the **`application` module** (if adapters need to directly invoke application services).
+
+
+
+## Date Range Validation in Controllers
+
+This Spring Boot application includes **date range validation** for `LocalDate` parameters directly within its controller methods. This ensures that any provided date falls within a predefined, acceptable range. Minimum and maximum dates are **2020-1-1** for minimum and **2030-12-31** as maximum, if the date is outside the allowed `min` or `max` range, an `HttpStatus.BAD_REQUEST` response is returned.

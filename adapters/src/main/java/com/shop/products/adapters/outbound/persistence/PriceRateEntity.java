@@ -8,12 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
-import java.time.LocalDateTime; // Use LocalDateTime for combined date and time
-import java.math.BigDecimal; // Use BigDecimal for monetary values
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "price_rates")
@@ -26,6 +26,9 @@ public class PriceRateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "product_id", nullable = false)
+    private Integer productId;
 
     @ManyToOne
     @JoinColumn(name = "brand_id", nullable = false)
@@ -40,9 +43,6 @@ public class PriceRateEntity {
     @ManyToOne
     @JoinColumn(name = "price_list", nullable = false)
     private PriceListEntity priceList;
-
-    @Column(name = "product_id", nullable = false)
-    private Long productId;
 
     @Column(name = "priority", nullable = false)
     private Integer priority;

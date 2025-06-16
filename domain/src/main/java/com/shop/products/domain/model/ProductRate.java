@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class ProductRate {
-    private Long productId;
+    private Integer productId;
     private String brand;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
