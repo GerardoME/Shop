@@ -14,12 +14,12 @@ Feature: Lists price rate for specific product
 
   Scenario: List price rate for an non existing product
     When making a request to get a product's price rate with
-      | productId | brandId | applicationDate |
-      | 00000     | 1       | 2025-06-12      |
+      | productId | brandId | applicationDate        |
+      | 00000     | 1       | 2020-06-14T10:00:00Z |
     Then the response status is 404
 
   Scenario: List price rate with wrong parameters
     When making a request to get a product's price rate with
-      | productId    | brandId | applicationDate |
-      | bad-parametr | 1       | 2025-06-12      |
+      | productId    | brandId | applicationDate        |
+      | bad-parametr | 1       | 2020-06-14T10:00:00Z |
     Then the response status is 400

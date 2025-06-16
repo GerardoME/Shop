@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -42,20 +44,32 @@ public class PriceRateSteps {
     private int port;
     @Autowired
     private TestRestTemplate restTemplate;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     private ResponseEntity<String> latestResponse;
 
-    @ParameterType("(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2}))")
-    public OffsetDateTime offsetDateTime(String dateString) {
-        try {
-            return OffsetDateTime.parse(dateString);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException(
-                    "Invalid RFC 3339 date-time format in Gherkin: '" + dateString + "'. " +
-                            "Expected 'yyyy-MM-ddTHH:mm:ssZ' or 'yyyy-MM-ddTHH:mm:ss[+|-]HH:MM'", e);
-        }
+
+    @When("making a request to get a product's price rate with")
+    public void requestAPI(List<Map<String, String>> dataTable) {
+        Map<String, String> requestParams = dataTable.get(0);
+        String productId = requestParams.get(PRODUCT_ID);
+        String brandId = requestParams.get(BRAND_ID);
+        String applicationDate = requestParams.get(APPLICATION_DATE);
+        assertNotNull(productId);
+        assertNotNull(brandId);
+        assertNotNull(applicationDate);
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse(applicationDate);
+        URI uri = UriComponentsBuilder.fromPath("/products")
+                .queryParam(PRODUCT_ID, productId)
+                .queryParam(BRAND_ID, brandId)
+                .queryParam(APPLICATION_DATE, applicationDate)
+                .queryParam(APPLICATION_DATE, offsetDateTime)
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .encode()
+                .build().toUri();
+
+        latestResponse = restTemplate.getForEntity(uri, String.class);
     }
 
     @When("making a request to get a product's price rate with productId {int} and brandId {int} and application date {string}")
